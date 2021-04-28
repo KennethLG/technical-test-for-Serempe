@@ -1,5 +1,8 @@
-import { createUser } from "./routes";
+import { 
+  createUser,
+  editUser } from "./routes";
 
 export {
-  createUser
+  createUser,
+  editUser
 }
