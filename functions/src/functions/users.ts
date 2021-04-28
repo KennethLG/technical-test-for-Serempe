@@ -1,7 +1,26 @@
 import * as functions from "firebase-functions";
-import { db } from "./config/firebase";
+import { db } from "../config/firebase";
 import * as crypto from "crypto";
 
+export const deleteUser = functions.https.onRequest(async (req, res) => {
+  const id = req.query.id as string;
+
+  if (!id) {
+    res.send("Please provide a valid id");
+    return;
+  }
+
+  const user = await db.collection("users").doc(id);
+
+  try {
+    await user.delete();
+  } catch (error) {
+    throw new Error("An error ocurred when deleting user");
+  }
+
+  res.send("User deleted successfully");
+  return;
+})
 
 export const editUser = functions.https.onRequest(async (req, res) => {
   const id = req.query.id as string;
@@ -30,15 +49,13 @@ export const editUser = functions.https.onRequest(async (req, res) => {
   }
 
   password = crypto.createHash("md5").update(password).digest("hex");
+  const userDoc = db.collection("users").doc(id);
 
   try {
-    const user = await db.collection("users").where("id", "==", id).get();
-    user.docs.map(async doc => {
-      await doc.ref.update({
-        name,
-        email,
-        password
-      });
+    await userDoc.update({
+      name,
+      email,
+      password
     });
   } catch (error) {
     console.error(error);
@@ -77,7 +94,7 @@ export const createUser = functions.https.onRequest(async (req, res) => {
 
   password = crypto.createHash("md5").update(password).digest("hex");
 
-  const userDoc = db.collection("users").doc();
+  const userDoc = db.collection("users").doc(id);
   
   try {
     await userDoc.create({

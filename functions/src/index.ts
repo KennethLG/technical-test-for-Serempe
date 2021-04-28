@@ -1,8 +1,11 @@
-import { 
-  createUser,
-  editUser } from "./routes";
+import { createPoints, deletePoints, editPoints } from "./functions/points";
+import { createUser, deleteUser, editUser } from "./functions/users";
 
 export {
   createUser,
-  editUser
+  editUser,
+  deleteUser,
+  createPoints,
+  editPoints,
+  deletePoints
 }
