@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import * as crypto from "crypto";
+import { User } from "../interfaces";
 
 export const deleteUser = functions.https.onRequest(async (req, res) => {
   const id = req.query.id as string;
@@ -50,13 +51,15 @@ export const editUser = functions.https.onRequest(async (req, res) => {
 
   password = crypto.createHash("md5").update(password).digest("hex");
   const userDoc = db.collection("users").doc(id);
+  const user: User = {
+    id,
+    name,
+    email,
+    password
+  }
 
   try {
-    await userDoc.update({
-      name,
-      email,
-      password
-    });
+    await userDoc.update(user);
   } catch (error) {
     console.error(error);
     throw new Error("An error occurred when updating user");
@@ -93,16 +96,16 @@ export const createUser = functions.https.onRequest(async (req, res) => {
   }
 
   password = crypto.createHash("md5").update(password).digest("hex");
-
   const userDoc = db.collection("users").doc(id);
+  const user: User = {
+    id,
+    name,
+    email,
+    password
+  }
   
   try {
-    await userDoc.create({
-      id,
-      name,
-      email,
-      password
-    });
+    await userDoc.create(user);
   } catch (error) {
     throw new Error("An error occurred when creating user");
   }
