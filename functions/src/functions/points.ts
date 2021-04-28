@@ -20,7 +20,7 @@ export const deletePoints = functions.https.onRequest(async (req, res) => {
   try {
     await pointsDoc.delete();
   } catch (error) {
-    throw new Error("An error ocurred when deleting points");
+    throw new Error("An error occurred when deleting points");
   }
 
   res.send(`Points ${id} of user ${userId} deleted successfully`);
@@ -61,7 +61,7 @@ export const editPoints = functions.https.onRequest(async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    throw new Error("An error ocurred when updating points");
+    throw new Error("An error occurred when updating points");
   }
 
   res.send(`Points ${id} of user ${userId} edited successfully`);
@@ -103,7 +103,7 @@ export const createPoints = functions.https.onRequest(async (req, res) => {
       reason
     });
   } catch (error) {
-    throw new Error("An error ocurred when creating points");
+    throw new Error("An error occurred when creating points");
   }
 
   res.send("Points created successfully");

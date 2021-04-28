@@ -15,7 +15,7 @@ export const deleteUser = functions.https.onRequest(async (req, res) => {
   try {
     await user.delete();
   } catch (error) {
-    throw new Error("An error ocurred when deleting user");
+    throw new Error("An error occurred when deleting user");
   }
 
   res.send("User deleted successfully");
@@ -59,7 +59,7 @@ export const editUser = functions.https.onRequest(async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    throw new Error("An error ocurred when updating user");
+    throw new Error("An error occurred when updating user");
   }
 
   res.send(`user ${id} edited successfully`);
@@ -104,7 +104,7 @@ export const createUser = functions.https.onRequest(async (req, res) => {
       password
     });
   } catch (error) {
-    throw new Error("An error ocurred when create user");
+    throw new Error("An error occurred when creating user");
   }
 
   res.send("User created successfully");
